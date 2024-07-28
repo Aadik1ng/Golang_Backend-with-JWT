@@ -1,55 +1,49 @@
 package expense
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/google/uuid"
 )
 
-var expenses = make(map[uuid.UUID]Expense)
-var mu sync.Mutex
+var (
+	expenses   = make(map[uuid.UUID]Expense)
+	balances   = make(map[uuid.UUID]float64)
+	expenseMux sync.Mutex
+)
 
 func SaveExpense(expense Expense) {
-	mu.Lock()
-	defer mu.Unlock()
+	expenseMux.Lock()
+	defer expenseMux.Unlock()
 	expenses[expense.ID] = expense
-	fmt.Println("Saved expense:", expense) // Debug print
+	for _, participant := range expense.Participants {
+		balances[participant.UserID] -= participant.Amount
+	}
 }
 
-func FetchExpensesByUserID(userID uuid.UUID) []Expense {
-	mu.Lock()
-	defer mu.Unlock()
+func FetchAllExpenses() []Expense {
+	expenseMux.Lock()
+	defer expenseMux.Unlock()
+
+	var allExpenses []Expense
+	for _, exp := range expenses {
+		allExpenses = append(allExpenses, exp)
+	}
+	return allExpenses
+}
+
+func FetchUserExpenses(userID uuid.UUID) []Expense {
+	expenseMux.Lock()
+	defer expenseMux.Unlock()
+
 	var userExpenses []Expense
-	for _, expense := range expenses {
-		for _, participant := range expense.Participants {
+	for _, exp := range expenses {
+		for _, participant := range exp.Participants {
 			if participant.UserID == userID {
-				userExpenses = append(userExpenses, expense)
+				userExpenses = append(userExpenses, exp)
 				break
 			}
 		}
 	}
-	fmt.Println("Fetched expenses for user:", userID, userExpenses) // Debug print
-	return userExpenses
-}
-
-func FetchAllExpenses() []Expense {
-	mu.Lock()
-	defer mu.Unlock()
-	var allExpenses []Expense
-	for _, expense := range expenses {
-		allExpenses = append(allExpenses, expense)
-	}
-	fmt.Println("Fetched all expenses:", allExpenses) // Debug print
-	return allExpenses
-}
-func FetchUserExpensesByID(userID uuid.UUID) []Expense {
-	mu.Lock()
-	defer mu.Unlock()
-	var userExpenses []Expense
-	if expense, ok := expenses[userID]; ok {
-		userExpenses = append(userExpenses, expense)
-	}
-	fmt.Println("Fetched user expenses for user:", userID, userExpenses) // Debug print
 	return userExpenses
 }

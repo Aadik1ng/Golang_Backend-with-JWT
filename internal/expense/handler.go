@@ -15,27 +15,16 @@ func AddExpense(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	if err := ValidateExpense(expense); err != nil {
+
+	createdExpense, err := CreateExpenseService(expense.Description, expense.Amount, expense.SplitMethod, expense.Participants)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	createdExpense := CreateExpenseService(expense.Description, expense.Amount, expense.SplitMethod, expense.Participants)
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(createdExpense)
 }
-
-// func GetUserExpenses(w http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)
-// 	userID, err := uuid.Parse(params["user_id"])
-// 	if err != nil {
-// 		http.Error(w, "Invalid user ID", http.StatusBadRequest)
-// 		return
-// 	}
-
-// 	userExpenses := GetExpensesByUserService(userID)
-// 	json.NewEncoder(w).Encode(userExpenses)
-// }
 
 func HandleFetchAllExpenses(w http.ResponseWriter, r *http.Request) {
 	allExpenses := FetchAllExpensesService()
@@ -48,6 +37,7 @@ func HandleDownloadBalanceSheet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(balanceSheet)
 }
+
 func GetUserExpenses(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := uuid.Parse(params["userId"])
@@ -56,7 +46,12 @@ func GetUserExpenses(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	expenses := FetchExpensesByUserID(userID)
+	expenses := GetUserExpensesService(userID)
+	if expenses == nil {
+		http.NotFound(w, r)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(expenses)
 }
