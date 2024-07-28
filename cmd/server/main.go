@@ -34,11 +34,12 @@ func initializeSampleData() {
 	user.CreateUserService("user1@example.com", "John Doe", "1234567890", user1ID)
 	user.CreateUserService("user2@example.com", "Jane Doe", "0987654321", user2ID)
 
-	expense.CreateExpenseService("Dinner", 50.0, "equal", []expense.Participant{
+	// Create expenses with sample data
+	expense.CreateExpenseService("Dinner", 50.0, "exact", []expense.Participant{
 		{UserID: user1ID, Amount: 25.0},
 		{UserID: user2ID, Amount: 25.0},
 	})
-	expense.CreateExpenseService("Taxi", 20.0, "equal", []expense.Participant{
+	expense.CreateExpenseService("Taxi", 20.0, "exact", []expense.Participant{
 		{UserID: user1ID, Amount: 10.0},
 		{UserID: user2ID, Amount: 10.0},
 	})

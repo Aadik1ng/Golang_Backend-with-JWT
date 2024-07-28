@@ -15,6 +15,10 @@ func AddExpense(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	if err := ValidateExpense(expense); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	createdExpense := CreateExpenseService(expense.Description, expense.Amount, expense.SplitMethod, expense.Participants)
 	w.WriteHeader(http.StatusCreated)

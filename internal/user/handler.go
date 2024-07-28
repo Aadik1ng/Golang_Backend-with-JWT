@@ -15,6 +15,10 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	if err := ValidateUser(user); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	createdUser := CreateUserService(user.Email, user.Name, user.Mobile, user.ID)
 	w.WriteHeader(http.StatusCreated)
