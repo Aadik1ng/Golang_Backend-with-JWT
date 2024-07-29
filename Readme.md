@@ -36,7 +36,8 @@ Installation
 
 1. Clone the repository:
 
-git clone https :// github .com/yourusername/daily − expenses . git cd daily − expenses
+git clone https :// github .com/yourusername/daily − expenses . git](https://github.com/Aadik1ng/Convin-AI.git 
+cd daily − expenses
 
 2. Install dependencies: go mod tidy
 2. Run the server:
