@@ -1,10 +1,10 @@
-﻿Daily Expenses API
+﻿# Daily Expenses API
 
-Overview
+## Overview
 
-The Daily Expenses API is a web application designed to manage and track daily expenses. It allows users to register, log in, and manage their expenses. The API also supports generating balance sheets to summarize the financial status of users.
+- The Daily Expenses API is a web application designed to manage and track daily expenses. It allows users to register, log in, and manage their expenses. The API also supports generating balance sheets to summarize the financial status of users.
 
-Features
+**Features**
 
 - User registration and login
 - JWT-based authentication
@@ -13,16 +13,34 @@ Features
 - Fetching all expenses
 - Downloading balance sheets
 
-Technologies Used
+**Technologies Used**
 
 - Go
 - Gorilla Mux
 - JWT (JSON Web Tokens)
 - UUID for unique identification
 
-Project Structure
+## Project Structure
 
 The project is organized into several packages:
+
+```
+D:.
+├───api
+├───auth
+├───cmd
+│   └───server
+├───internal
+│   ├───database
+│   ├───expense
+│   ├───middleware
+│   └───user
+├───New folder
+└───pkg
+    ├───middleware
+    └───utils
+    
+```
 
 - api : Contains route registration and request handlers.
 - auth : Manages JWT authentication and middleware.
@@ -42,6 +60,7 @@ cd daily − expenses
 2. Install dependencies: go mod tidy
 2. Run the server:
 
+```
 go run cmd/server/main. go
 
 API Endpoints
@@ -96,35 +115,37 @@ Request body :
 - GET /api/all-expenses : Fetch all expenses.
 - GET /api/balance-sheet : Download the balance sheet.
 
-Authentication
+```
+
+### Authentication
 
 The API uses JWT for authentication. Upon successful login, a token is issued which must be included in the Authorization header of subsequent requests:
 
-Authorization : Bearer <token >
+```Authorization : Bearer <token >```
 
 Sample Data Initialization
 
 The application initializes with sample data for testing purposes. The sample data includes predefined users and expenses to facilitate quick testing and development.
 
-Middleware
+## Middleware
 
-Authentication Middleware
+### Authentication Middleware
 
 The AuthMiddleware validates the JWT token in the Authorization header, extracts the user ID from the token, and adds it to the request context.
 
-Example Usage
+## Example Usage
 
 1. Register a User:
 
-curl −X POST http :// localhost :8080/ users −d ’{”email ”:” john . doe@example .com” ,  ”nam
+curl −X POST http :// localhost :8080/ users −d ’{”email ”:” john . doe@example .com” ,  ”name"}
 
 2. Login:
 
-curl −X POST http :// localhost :8080/ login −d ’{”username”:” user ” ,  ”password ”:”user@
+curl −X POST http :// localhost :8080/ login −d ’{”username”:” user ” ,  ”password ”:”user@1"}
 
 3. Add an Expense:
 
-curl −X POST http :// localhost :8080/ api/expenses −H ”Authorization :  Bearer  < token
+curl −X POST http :// localhost :8080/ api/expenses −H ”Authorization :  Bearer  < token>
 
 4. Fetch User Expenses:
 
@@ -132,6 +153,26 @@ curl −X GET http :// localhost :8080/ api/expenses/1bc9e841 − 79f8− 4050�
 
 5. Download Balance Sheet:
 
-curl −X GET http :// localhost :8080/ api/balance − sheet −H ”Authorization :  Bearer  < t
+curl −X GET http :// localhost :8080/ api/balance − sheet −H ”Authorization :  Bearer  < token>
 
 
+## Output Screenshots:-
+
+- ADD_EXPENSE ![alt text](ADD_EXPENSE.PNG)
+
+- ADD_USERS ![alt text](ADD_USERS.PNG)
+
+- GET_ALLexpense ![alt text](GET_ALLexpense.PNG)
+
+- GET_EXPENSEbyID ![alt text](GET_EXPENSEbyID.PNG)
+
+- GET_SHEET ![alt text](GET_SHEET.PNG)
+
+- GET_USER![alt text](GET_USER.PNG)
+
+- JWT_AUTH ![alt text](JWT_TOKEN.PNG)
+
+
+## Author
+
+-  ***Aaditya Aaryan*** 
