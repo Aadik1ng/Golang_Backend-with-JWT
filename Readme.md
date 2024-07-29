@@ -133,9 +133,4 @@ curl −X GET http :// localhost :8080/ api/expenses/1bc9e841 − 79f8− 4050�
 
 curl −X GET http :// localhost :8080/ api/balance − sheet −H ”Authorization :  Bearer  < t
 
-Contributing
 
-Contributions are welcome! Please fork the repository and submit a pull request with your changes. License
-
-This project is licensed under the MIT License.
-3
