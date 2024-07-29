@@ -158,19 +158,20 @@ curl −X GET http :// localhost :8080/ api/balance − sheet −H ”Authorizat
 
 ## Output Screenshots:-
 
-- ADD_EXPENSE ![alt text](ADD_EXPENSE.PNG)
+- ADD_EXPENSE ![alt text](Screenshots/ADD_EXPENSE.PNG)
 
-- ADD_USERS ![alt text](ADD_USERS.PNG)
 
-- GET_ALLexpense ![alt text](GET_ALLexpense.PNG)
+- ADD_USERS ![alt text](Screenshots/ADD_USERS.PNG)
 
-- GET_EXPENSEbyID ![alt text](GET_EXPENSEbyID.PNG)
+- GET_ALLexpense ![alt text](Screenshots/GET_ALLexpense.PNG)
 
-- GET_SHEET ![alt text](GET_SHEET.PNG)
+- GET_EXPENSEbyID ![alt text](Screenshots/GET_EXPENSEbyID.PNG)
 
-- GET_USER![alt text](GET_USER.PNG)
+- GET_SHEET ![alt text](Screenshots/GET_SHEET.PNG)
 
-- JWT_AUTH ![alt text](JWT_TOKEN.PNG)
+- GET_USER![alt text](Screenshots/GET_USER.PNG)
+
+- JWT_AUTH ![alt text](Screenshots/JWT_TOKEN.PNG)
 
 
 ## Author
