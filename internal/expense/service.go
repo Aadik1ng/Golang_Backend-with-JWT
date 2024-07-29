@@ -2,7 +2,6 @@ package expense
 
 import (
 	"errors"
-	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,27 +16,23 @@ func CreateExpenseService(description string, amount float64, splitMethod string
 		Participants: participants,
 		CreatedAt:    time.Now(),
 	}
+	if err := ValidateExpense(expense); err != nil {
+		return Expense{}, err
+	}
 
-	if numericSplit, err := strconv.Atoi(splitMethod); err == nil {
-		if numericSplit < 0 || numericSplit > 100 {
-			return Expense{}, errors.New("invalid percentage value")
+	switch splitMethod {
+	case "equal":
+		splitEqual(&expense)
+	case "exact":
+		if err := splitExact(&expense); err != nil {
+			return Expense{}, err
 		}
-		splitPercentageBasedOnValue(&expense, float64(numericSplit))
-	} else {
-		switch splitMethod {
-		case "equal":
-			splitEqual(&expense)
-		case "exact":
-			if err := splitExact(&expense); err != nil {
-				return Expense{}, err
-			}
-		case "percentage":
-			if err := splitPercentage(&expense); err != nil {
-				return Expense{}, err
-			}
-		default:
-			return Expense{}, errors.New("invalid split method")
+	case "percentage":
+		if err := splitPercentage(&expense); err != nil {
+			return Expense{}, err
 		}
+	default:
+		return Expense{}, errors.New("invalid split method")
 	}
 
 	saveExpense(expense)
@@ -45,7 +40,10 @@ func CreateExpenseService(description string, amount float64, splitMethod string
 }
 
 func splitPercentageBasedOnValue(expense *Expense, percentage float64) {
-	if len(expense.Participants) != 1 {
+	if len(expense.Participants) < 1 {
+		return // or handle error
+	}
+	if len(expense.Participants) == 1 {
 		expense.Participants[0].Percentage = 100 - percentage
 		expense.Participants = append(expense.Participants, Participant{
 			UserID:     uuid.New(),
