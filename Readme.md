@@ -36,7 +36,8 @@ Installation
 
 1. Clone the repository:
 
-git clone https :// github .com/yourusername/daily − expenses . git cd daily − expenses
+git clone https://github.com/Aadik1ng/Convin-AI.git 
+cd daily − expenses
 
 2. Install dependencies: go mod tidy
 2. Run the server:
@@ -133,9 +134,4 @@ curl −X GET http :// localhost :8080/ api/expenses/1bc9e841 − 79f8− 4050�
 
 curl −X GET http :// localhost :8080/ api/balance − sheet −H ”Authorization :  Bearer  < t
 
-Contributing
 
-Contributions are welcome! Please fork the repository and submit a pull request with your changes. License
-
-This project is licensed under the MIT License.
-3
